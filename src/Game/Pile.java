@@ -10,11 +10,13 @@ public class Pile {
 
  
     public Pile() {
+    	int i=1;
         // Initialize the pile with cards
         for (int suit = 1; suit <= 4; suit++) {
             for (int height = 1; height <= 13; height++) {
-                Card card = new Card(height, suit, "tqt");
+                Card card = new Card(height, suit, "\\Reussite\\src\\Cards\\"+i+".png");
                 cardPile.add(card);
+                i++;
             }
         }
         

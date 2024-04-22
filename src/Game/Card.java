@@ -3,8 +3,8 @@ import javax.swing.ImageIcon;
 
 public class Card {
 
-	int hauteur;
-	int suits; //1=coeur, 2=pique, 3=trèfle ezt 4=careau
+	int hauteur; // As=1, Jack=11, Queen=12, King=13
+	int suits; //1=coeur, 2=pique, 3=trèfle ezt 4=carreau
 	ImageIcon image;
 	
 	Card(){
