@@ -13,7 +13,7 @@ public class Pile {
         // Initialize the pile with cards
         for (int suit = 1; suit <= 4; suit++) {
             for (int height = 1; height <= 13; height++) {
-                Card card = new Card(height, suit, true, "tqt");
+                Card card = new Card(height, suit, "tqt");
                 cardPile.add(card);
             }
         }
@@ -32,4 +32,6 @@ public class Pile {
     	return returnedCard;
     	
     }
+    
+    
 }
