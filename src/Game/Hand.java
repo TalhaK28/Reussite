@@ -12,7 +12,7 @@ public class Hand {
 		this.hiddenCard=null;
 	}
 	
-	public int getHandSize() {
+	public int getSize() {
 		return this.cardHand.size();
 	}
 	
@@ -36,7 +36,6 @@ public class Hand {
 	public void hideCard() {
 		this.hiddenCard.addFirst(this.cardHand.get(4));
 		this.cardHand.remove(4);
-		
 	}
 	
 	public void uncoverCard() {
@@ -52,8 +51,12 @@ public class Hand {
 		
 	}
 	
+	public Card getHead() {
+		return cardHand.getFirst();
+	}
 	
-	
-	
+	public Card getTail() {
+		return cardHand.getLast();
+	}
 	
 }

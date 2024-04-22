@@ -36,4 +36,15 @@ public class Card {
         return this.image;
     }
 	
+	public boolean isHauteurEqual(Card e) {
+		
+		return this.hauteur == e.hauteur;
+		
+	}
+	
+	public boolean isSuitEqual(Card e) {
+		
+		return this.suits == e.suits;
+		
+	}
 }

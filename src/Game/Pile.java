@@ -5,8 +5,7 @@ import java.util.Collections;
 
 public class Pile {
 
-    LinkedList<Card> cardPile = new LinkedList<>();
-    public int cardNumber = 52;
+    public LinkedList<Card> cardPile = new LinkedList<>();
 
  
     public Pile() {
@@ -33,6 +32,10 @@ public class Pile {
     	
     	return returnedCard;
     	
+    }
+    
+    public int getSize() {
+    	return this.cardPile.size();
     }
     
     
