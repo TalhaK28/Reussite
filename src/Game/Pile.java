@@ -13,9 +13,13 @@ public class Pile {
         // Initialize the pile with cards
         for (int suit = 1; suit <= 4; suit++) {
             for (int height = 1; height <= 13; height++) {
-                Card card = new Card(height, suit, "\\Reussite\\src\\Cards\\"+i+".png");
-                cardPile.add(card);
-                i++;
+            	try {
+                    Card card = new Card(height, suit, "C:\\Users\\talha\\eclipse-workspace\\Reussite\\src\\Cards\\"+i+".png");
+                    cardPile.add(card);
+                    i++;
+                } catch (Exception e) {
+                    System.out.println("Erreur lors du chargement de l'image pour la carte " + i + ": " + e.getMessage());
+                }
             }
         }
         

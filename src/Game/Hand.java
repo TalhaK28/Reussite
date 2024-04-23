@@ -4,12 +4,12 @@ import java.util.LinkedList;
 
 public class Hand {
 
-	LinkedList<Card> cardHand = new LinkedList<>();
-	LinkedList<Card> hiddenCard = new LinkedList<>();
+	LinkedList<Card> cardHand;
+	LinkedList<Card> hiddenCard;
 	
 	Hand(){
-		this.cardHand=null;
-		this.hiddenCard=null;
+		this.cardHand = new LinkedList<>();
+        this.hiddenCard = new LinkedList<>();
 	}
 	
 	public int getSize() {
@@ -17,37 +17,44 @@ public class Hand {
 	}
 	
 	public int getHiddenCardSize() {
-		return this.hiddenCard.size();
+		
+		if (!this.hiddenCard.isEmpty()) { 
+			return this.hiddenCard.size();
+		}else { 
+			return 0;
+		}
 	}
 	
 	public void allDiscarded() {
 		
-		this.cardHand=null;
+		this.cardHand=new LinkedList<>();
 		
 	}
 	
 	public void twoDiscarded() {
 		
-		this.cardHand.remove(2);
-		this.cardHand.remove(2);
+		this.cardHand.remove(1);
+		this.cardHand.remove(1);
 		
 	}
 	
 	public void hideCard() {
-		this.hiddenCard.addFirst(this.cardHand.get(4));
-		this.cardHand.remove(4);
+		
+		this.hiddenCard.addFirst(this.cardHand.get(3));
+		this.cardHand.remove(3);
+		
 	}
 	
 	public void uncoverCard() {
 		
-		this.cardHand.addLast(this.hiddenCard.get(1));
+		this.cardHand.addLast(this.hiddenCard.get(0));
 		this.hiddenCard.removeFirst();
 		
 	}
 	
 	public void addCard(Card e ) {
 		
-		this.cardHand.add(e);
+		this.cardHand.addFirst(e);
 		
 	}
 	
