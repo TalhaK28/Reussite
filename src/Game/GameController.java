@@ -43,16 +43,16 @@ public class GameController {
         while (cardPile.getSize() > 0) {
         	System.out.println("score : "+score);
             HandViewer handViewer = new HandViewer(Hand.cardHand);
-            HandViewer hiddenViewer = new HandViewer(Hand.hiddenCard);
+            //HandViewer hiddenViewer = new HandViewer(Hand.hiddenCard);
             try {
                 // Pause de 10 seconde
-                Thread.sleep(10000);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
                 // Gestion de l'exception
                 e.printStackTrace();
             }
             handViewer.dispose();
-            hiddenViewer.dispose();
+            //hiddenViewer.dispose();
             
 
         	//System.out.println(cardPile.getSize());
@@ -108,6 +108,9 @@ public class GameController {
                         Hand.addCard(cardPile.cardDraw());
 
                     }
+                }else {
+                	Hand.hideCard();
+                    Hand.addCard(cardPile.cardDraw());
                 }
              
         }
