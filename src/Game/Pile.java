@@ -14,7 +14,7 @@ public class Pile {
         for (int suit = 1; suit <= 4; suit++) {
             for (int height = 1; height <= 13; height++) {
             	try {
-                    Card card = new Card(height, suit, "C:\\Users\\talha\\eclipse-workspace\\Reussite\\src\\Cards\\"+i+".png");
+                    Card card = new Card(height, suit, "src\\Cards\\"+i+".png");
                     cardPile.add(card);
                     i++;
                 } catch (Exception e) {

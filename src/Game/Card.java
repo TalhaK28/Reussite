@@ -5,7 +5,7 @@ public class Card {
 
 	int hauteur; // As=1, Jack=11, Queen=12, King=13
 	int suits; //1=coeur, 2=pique, 3=trèfle ezt 4=carreau
-	ImageIcon image;
+	String image;
 	
 	Card(){
 		
@@ -20,7 +20,7 @@ public class Card {
 		
 		this.hauteur=hauteur;
 		this.suits=suits;
-		this.image= new ImageIcon(imagePath);
+		this.image= imagePath;
 	}
 	
 	public int getHauteur(){
@@ -32,7 +32,7 @@ public class Card {
 	}
 	
 	
-	public ImageIcon getImage() {
+	public String getImage() {
         return this.image;
     }
 	

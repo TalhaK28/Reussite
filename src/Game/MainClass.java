@@ -1,6 +1,8 @@
 package Game;
-import javax.swing.*;
-import java.awt.*;
+//import javax.swing.*;
+//import java.awt.*;
+
+import java.awt.EventQueue;
 
 public class MainClass {
 
@@ -8,8 +10,21 @@ public class MainClass {
 		
 		GameController GameControl=new GameController();
 		
-		int score =GameControl.start();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Menu frame = new Menu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
+		//int score =GameControl.start();
 
+		//System.out.println("Le score final :" + score);
 	}
 
 }

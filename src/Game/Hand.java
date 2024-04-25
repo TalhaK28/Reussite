@@ -66,4 +66,9 @@ public class Hand {
 		return cardHand.getLast();
 	}
 	
+	public Card getCard(int rang) {
+		return this.cardHand.get(rang);
+	}
+	
+
 }

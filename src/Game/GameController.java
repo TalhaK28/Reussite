@@ -1,123 +1,109 @@
 package Game;
 
-import java.util.Scanner;
-import javax.swing.*;
 
 public class GameController {
 
+	  Pile cardPile;
+      Hand Hand;
+      int score, joker;
+	
     GameController() {
 
+    	  this.cardPile = new Pile();
+          this.Hand = new Hand();
+
+          for (int i = 0; i < 4; i++) {
+
+              Hand.addCard(cardPile.cardDraw());
+
+          }
+          
     }
 
-    public int start() {
+    public int testHand() {
 
-        Scanner scanner = new Scanner(System.in);
-        char choice;
         int score = 0, joker = 0;
+        
+        if (this.Hand.getHead().isHauteurEqual(this.Hand.getTail())) {
 
-        Pile cardPile = new Pile();
-        Hand Hand = new Hand();
+           return 1;
 
-        for (int i = 0; i < 4; i++) {
+        } else if (this.Hand.getHead().isSuitEqual(this.Hand.getTail())) {
 
-            Hand.addCard(cardPile.cardDraw());
+        	return 2;
 
+        } else if (joker < 3) {
+                    
+             return 3;
+
+        }else {
+
+             return 4;
         }
-        
-        //Je veux qu'à partir de cet endroit les 4 quatres cartes de Hand soient affichés
+             
+    }
 
-     
-
-     // Affichage des cartes de la main
-       // HandViewer handViewer = new HandViewer(Hand.cardHand);
-        //try {
-            // Pause de 1 seconde
-          //  Thread.sleep(1000);
-        //} catch (InterruptedException e) {
-            // Gestion de l'exception
-          //  e.printStackTrace();
-        //}
-        //handViewer.dispose();
-        
-       
-        while (cardPile.getSize() > 0) {
-        	System.out.println("score : "+score);
-            HandViewer handViewer = new HandViewer(Hand.cardHand);
-            //HandViewer hiddenViewer = new HandViewer(Hand.hiddenCard);
-            try {
-                // Pause de 10 seconde
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                // Gestion de l'exception
-                e.printStackTrace();
-            }
-            handViewer.dispose();
-            //hiddenViewer.dispose();
-            
-
-        	//System.out.println(cardPile.getSize());
-        	
-            if (Hand.getHead().isHauteurEqual(Hand.getTail())) {
-
-                Hand.allDiscarded();
+ 
+    
+    public void firstCaseHand() {
+    	   this.Hand.allDiscarded();
 
                 for (int i = 0; i < 4; i++) {
-                    if (Hand.getHiddenCardSize() != 0) {
-                        Hand.uncoverCard();
+                    if (this.Hand.getHiddenCardSize() != 0) {
+                        this.Hand.uncoverCard();
                     } else {
-                        Hand.addCard(cardPile.cardDraw());
+                        this.Hand.addCard(this.cardPile.cardDraw());
                     }
                 }
-                score += 5;
-
-            } else if (Hand.getHead().isSuitEqual(Hand.getTail())) {
-
-                Hand.twoDiscarded();
+                this.score += 5;
+    }
+    
+    public void secondCaseHand() {
+    	 this.Hand.twoDiscarded();
 
                 for (int i = 0; i < 2; i++) {
-                    if (Hand.getHiddenCardSize() != 0) {
-                        Hand.uncoverCard();
+                    if (this.Hand.getHiddenCardSize() != 0) {
+                        this.Hand.uncoverCard();
                     } else {
-                        Hand.addCard(cardPile.cardDraw());
+                        this.Hand.addCard(this.cardPile.cardDraw());
                     }
                 }
 
-                score += 2;
+                this.score += 2;
+    }
+    
+    public void  thirdCaseHand() {
+    	 joker++;
+         this.Hand.twoDiscarded();
 
-            } else if (joker < 3) {
-                    
-            	System.out.println("Do you want to use a joker ? (Y/N)");
-            	choice = scanner.next().charAt(0);
-                    
-            	if (choice == 'Y' || choice == 'y') {
+         for (int i = 0; i < 2; i++) {
+             if (this.Hand.getHiddenCardSize() != 0) {
+                 this.Hand.uncoverCard();
+             } else {
+                 this.Hand.addCard(this.cardPile.cardDraw());
+             }
+         }
+    }
+    
+    public void fourthCaseHand() {
+    	
+    	this.Hand.hideCard();
+    	this.Hand.addCard(this.cardPile.cardDraw());
+    	
+    }
+    
+    public int getScore() {
+    	return this.score;
+    }
 
-                        joker++;
-                        Hand.twoDiscarded();
-
-                        for (int i = 0; i < 2; i++) {
-                            if (Hand.getHiddenCardSize() != 0) {
-                                Hand.uncoverCard();
-                            } else {
-                                Hand.addCard(cardPile.cardDraw());
-                            }
-                        }
-                        
-                    }else {
-
-                        Hand.hideCard();
-                        Hand.addCard(cardPile.cardDraw());
-
-                    }
-                }else {
-                	Hand.hideCard();
-                    Hand.addCard(cardPile.cardDraw());
-                }
-             
-        }
-        scanner.close();
-       
-        
-        return score;
-
+    public String getCardImage(int rang) {
+    	
+    	return this.Hand.getCard(rang).getImage(); 
+    
+    }
+    
+    public int getJoker() {
+    	return joker;
     }
 }
+
