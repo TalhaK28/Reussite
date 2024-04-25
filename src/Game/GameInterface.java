@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,6 +32,10 @@ public class GameInterface extends JFrame {
 	private JLabel secondCard;
 	private JLabel thirdCard;
 	private JLabel fourthCard;
+	private JLabel scoreLabel_1;
+	private JLabel jokerLabel_1;
+	
+	int scoreKeeper=0, nbrJoker=3;
 	
 	public void refreshFrame() {
         getContentPane().repaint();
@@ -41,9 +46,7 @@ public class GameInterface extends JFrame {
 	}
 
 	
-	/**
-	 * Create the frame.
-	 */
+	
 	public GameInterface() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\talha\\eclipse-workspace\\Reussite\\src\\Cards\\1.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +63,7 @@ public class GameInterface extends JFrame {
 		drawButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//this.updateImagesPaths(GameControl.Hand);
+				if(GameControl.cardPile.getSize()>0) {
 				
 			
 				switch (GameControl.testHand()) {
@@ -95,13 +98,23 @@ public class GameInterface extends JFrame {
 				        
 				}
 
-				this.updateImagesPaths(GameControl.Hand);
+				scoreKeeper=GameControl.getScore();
+				nbrJoker=3-GameControl.getJoker();
+				this.Update(GameControl.Hand, scoreKeeper, nbrJoker);
+				
 				refreshFrame();
 				refreshInternalFrame(HandViewer);
+				
+				}else {
+					
+					String message="Votre score final : "+String.valueOf(GameControl.getScore())+".";
+					showNotificationWithButton( message);
+					
+				}
 
 			}
 
-			public void updateImagesPaths(Hand hand) {
+			public void Update(Hand hand, int score, int joker) {
 				path1=hand.getCard(0).getImage();
 				path2=hand.getCard(1).getImage();
 				path3=hand.getCard(2).getImage();
@@ -111,7 +124,26 @@ public class GameInterface extends JFrame {
 			    secondCard.setIcon(new ImageIcon(path2));
 			    thirdCard.setIcon(new ImageIcon(path3));
 			    fourthCard.setIcon(new ImageIcon(path4));
+			    
+			    scoreLabel_1.setText(String.valueOf(score));
+			    jokerLabel_1.setText(String.valueOf(joker));
+			    
 			}
+		
+			public  void showNotificationWithButton(String message) {
+		        // Créer un tableau d'objets pour les options de bouton
+		        Object[] options = { "OK" };
+
+		        // Afficher une boîte de dialogue avec un bouton de validation personnalisé
+		        int choice = JOptionPane.showOptionDialog(null, message, "Notification",
+		                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+		                null, options, options[0]);
+
+		        // Traiter la réponse de l'utilisateur
+		        if (choice == JOptionPane.OK_OPTION) {
+		            dispose();
+		        }
+		    }
 		});
 		drawButton.setFont(new Font("Old English Text MT", Font.PLAIN, 29));
 		
@@ -121,12 +153,17 @@ public class GameInterface extends JFrame {
 				
 				joker=false;
 				GameControl.thirdCaseHand();
-				this.updateImagesPaths(GameControl.Hand);
+				
+				scoreKeeper=GameControl.getScore();
+				nbrJoker=3-GameControl.getJoker();
+				this.Update(GameControl.Hand, scoreKeeper, nbrJoker);
+				
+				
 				refreshInternalFrame(HandViewer);
 				GameInterface.this.jokerButton.setEnabled(false);
 			}
 			
-			public void updateImagesPaths(Hand hand) {
+			public void Update(Hand hand, int score, int joker) {
 				path1=hand.getCard(0).getImage();
 				path2=hand.getCard(1).getImage();
 				path3=hand.getCard(2).getImage();
@@ -136,6 +173,9 @@ public class GameInterface extends JFrame {
 			    secondCard.setIcon(new ImageIcon(path2));
 			    thirdCard.setIcon(new ImageIcon(path3));
 			    fourthCard.setIcon(new ImageIcon(path4));
+			    
+			    scoreLabel_1.setText(String.valueOf(score));
+			    jokerLabel_1.setText(String.valueOf(joker));
 			}
 			
 		});
@@ -170,8 +210,8 @@ public class GameInterface extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap(31, Short.MAX_VALUE)
-					.addComponent(HandViewer, GroupLayout.PREFERRED_SIZE, 440, GroupLayout.PREFERRED_SIZE)
-					.addGap(87)
+					.addComponent(HandViewer, GroupLayout.PREFERRED_SIZE, 492, GroupLayout.PREFERRED_SIZE)
+					.addGap(35)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
@@ -194,19 +234,46 @@ public class GameInterface extends JFrame {
 		
 		fourthCard = new JLabel("");
 		fourthCard.setIcon(new ImageIcon(path4));
+		
+		JLabel scoreLabel = new JLabel("Score :");
+		scoreLabel.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 31));
+		
+		JLabel jokerLabel = new JLabel("Joker :");
+		jokerLabel.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 32));
+		
+		scoreLabel_1 = new JLabel((String.valueOf(scoreKeeper)));
+		scoreLabel_1.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 31));
+		
+		jokerLabel_1 = new JLabel(String.valueOf(nbrJoker));
+		jokerLabel_1.setFont(new Font("Tw Cen MT Condensed Extra Bold", Font.PLAIN, 31));
 		GroupLayout groupLayout = new GroupLayout(HandViewer.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(32)
-					.addComponent(firstCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-					.addGap(14)
-					.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(34, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addGap(32)
+							.addComponent(firstCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(14)
+							.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(34, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+							.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+							.addGap(149))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -216,7 +283,14 @@ public class GameInterface extends JFrame {
 						.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
 						.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
 						.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+							.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scoreLabel, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+						.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		HandViewer.getContentPane().setLayout(groupLayout);
 		contentPane.setLayout(gl_contentPane);
