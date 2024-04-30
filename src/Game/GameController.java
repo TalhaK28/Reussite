@@ -21,8 +21,6 @@ public class GameController {
     }
 
     public int testHand() {
-
-        int score = 0, joker = 0;
         
         if (this.Hand.getHead().isHauteurEqual(this.Hand.getTail())) {
 

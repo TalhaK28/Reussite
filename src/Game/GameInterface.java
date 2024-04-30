@@ -1,9 +1,8 @@
 package Game;
 
-import java.awt.EventQueue;
+
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +10,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Toolkit;
@@ -19,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.DropMode;
 
 public class GameInterface extends JFrame {
 
@@ -36,6 +36,8 @@ public class GameInterface extends JFrame {
 	private JLabel jokerLabel_1;
 	
 	int scoreKeeper=0, nbrJoker=3;
+	private JTextField txtAnalyse;
+	private JTextField textAction;
 	
 	public void refreshFrame() {
         getContentPane().repaint();
@@ -57,21 +59,28 @@ public class GameInterface extends JFrame {
 		setContentPane(contentPane);
 		
 		JInternalFrame HandViewer = new JInternalFrame("Hand");
+		HandViewer.setBounds(177, 36, 936, 492);
 		HandViewer.setBorder(null);
 		
 		JButton drawButton = new JButton("Draw cards");
+		drawButton.setBounds(252, 546, 248, 95);
 		drawButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(GameControl.cardPile.getSize()>0) {
-				
+				txtAnalyse.setText("");
+				textAction.setText("");
 			
 				switch (GameControl.testHand()) {
 				    case 1:
 				    	GameControl.firstCaseHand();
+				    	txtAnalyse.setText("Same number");
+				    	textAction.setText("All cards had been discarded");
 				        break;
 				    case 2:
 				        GameControl.secondCaseHand();
+				        txtAnalyse.setText("Same suit");
+				        textAction.setText("2 cards had been discarded");
 				        break;
 				    case 3:
 				    	if(joker) {
@@ -79,20 +88,28 @@ public class GameInterface extends JFrame {
 				    		GameControl.fourthCaseHand();
 				    		GameInterface.this.jokerButton.setEnabled(false);
 				    		joker=false;
+				    		txtAnalyse.setText("You didn't use joker");
+					        textAction.setText("1 card added and 1 covered");
 				    		
 				    	}else {
 				    		joker=true;
 				    		if(GameControl.joker<3) {
 				    			GameInterface.this.jokerButton.setEnabled(true);
-				    	
+				    			txtAnalyse.setText("You can use a joker");
+						        textAction.setText("2 cards will be discarded");
+				    			
 				    		}else {
 				    			GameControl.fourthCaseHand();
 				    			joker=false;
+				    			txtAnalyse.setText("No combination");
+						        textAction.setText("1 card added and 1 covered");
 				    		}
 				    	}
 				        break;
 				    case 4:
 				        GameControl.fourthCaseHand();
+				        txtAnalyse.setText("No combination");
+				        textAction.setText("1 card added and 1 covered");
 				        break;
 				    default:
 				        
@@ -148,6 +165,7 @@ public class GameInterface extends JFrame {
 		drawButton.setFont(new Font("Old English Text MT", Font.PLAIN, 29));
 		
 		jokerButton = new JButton("Joker");
+		jokerButton.setBounds(734, 546, 248, 95);
 		jokerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -158,7 +176,8 @@ public class GameInterface extends JFrame {
 				nbrJoker=3-GameControl.getJoker();
 				this.Update(GameControl.Hand, scoreKeeper, nbrJoker);
 				
-				
+				txtAnalyse.setText("You used a joker");
+		        textAction.setText("2 cards had been discarded");
 				refreshInternalFrame(HandViewer);
 				GameInterface.this.jokerButton.setEnabled(false);
 			}
@@ -183,45 +202,28 @@ public class GameInterface extends JFrame {
 		jokerButton.setFont(new Font("Old English Text MT", Font.PLAIN, 29));
 		
 		JButton exitButton = new JButton("Exit");
+		exitButton.setBounds(1072, 567, 173, 54);
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
 		exitButton.setFont(new Font("Old English Text MT", Font.PLAIN, 29));
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(248)
-							.addComponent(drawButton, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
-							.addGap(218)
-							.addComponent(jokerButton, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-							.addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(172)
-							.addComponent(HandViewer, GroupLayout.PREFERRED_SIZE, 936, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(31, Short.MAX_VALUE)
-					.addComponent(HandViewer, GroupLayout.PREFERRED_SIZE, 492, GroupLayout.PREFERRED_SIZE)
-					.addGap(35)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(drawButton, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jokerButton, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
-							.addGap(37))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(exitButton, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
-		);
+		
+		txtAnalyse = new JTextField();
+		txtAnalyse.setEditable(false);
+		txtAnalyse.setBounds(557, 567, 96, 23);
+		txtAnalyse.setText("");
+		txtAnalyse.setFont(new Font("Tw Cen MT Condensed", Font.PLAIN, 15));
+		txtAnalyse.setColumns(10);
+		
+		textAction = new JTextField();
+		textAction.setEditable(false);
+		textAction.setBounds(557, 608, 150, 23);
+		textAction.setText("");
+		textAction.setFont(new Font("Tw Cen MT Condensed", Font.PLAIN, 15));
+		textAction.setColumns(25);
+		contentPane.setLayout(null);
 		
 		firstCard = new JLabel("");
 		firstCard.setIcon(new ImageIcon(path1));
@@ -250,50 +252,46 @@ public class GameInterface extends JFrame {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGap(32)
-							.addComponent(firstCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(14)
-							.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(34, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(6)
-							.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
-							.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-							.addGap(149))))
+					.addGap(32)
+					.addComponent(firstCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
+					.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(153)
+					.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+					.addGap(263)
+					.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(firstCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
-						.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
+						.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
 						.addComponent(thirdCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE)
-						.addComponent(secondCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(fourthCard, GroupLayout.PREFERRED_SIZE, 413, GroupLayout.PREFERRED_SIZE))
+					.addGap(6)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-							.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scoreLabel, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scoreLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jokerLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jokerLabel_1, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)))
 		);
 		HandViewer.getContentPane().setLayout(groupLayout);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.add(HandViewer);
+		contentPane.add(drawButton);
+		contentPane.add(txtAnalyse);
+		contentPane.add(textAction);
+		contentPane.add(jokerButton);
+		contentPane.add(exitButton);
 		HandViewer.setVisible(true);
 	}
 	

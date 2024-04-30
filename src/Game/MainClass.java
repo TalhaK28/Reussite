@@ -8,8 +8,6 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		
-		GameController GameControl=new GameController();
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -22,9 +20,7 @@ public class MainClass {
 		});
 		
 		
-		//int score =GameControl.start();
-
-		//System.out.println("Le score final :" + score);
+	
 	}
 
 }

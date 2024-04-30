@@ -1,7 +1,6 @@
 package Game;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 public class Menu extends JFrame {
 
@@ -113,22 +111,8 @@ public class Menu extends JFrame {
         contentPane.setLayout(gl_contentPane);
     }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Menu frame = new Menu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-public void disposeWithoutExiting(){
+
+    public void disposeWithoutExiting(){
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             dispose();
         }
