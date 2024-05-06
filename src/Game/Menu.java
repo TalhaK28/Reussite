@@ -13,22 +13,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.awt.Dimension;
 
 public class Menu extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 
     /**
      * Create the frame.
      */
     public Menu() {
-    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\talha\\eclipse-workspace\\Reussite\\src\\Cards\\1.png"));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1324, 754);
+        // Définir la taille de la fenêtre en plein écran
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds(0, 0, screenSize.width, screenSize.height);
+
+        // Masquer la barre de titre de la fenêtre
+        setUndecorated(true);
 
         // Background Image
-        ImageIcon backgroundImg = new ImageIcon("src\\Game\\backgroundLP2A_1.png"); 
+        ImageIcon backgroundImg = new ImageIcon("src\\Game\\backgroundLP2A_1.png");
         contentPane = new JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -38,10 +42,6 @@ public class Menu extends JFrame {
         };
         setContentPane(contentPane);
 
-        
-        
-        
-        
         // Title label
         JLabel titleLabel = new JLabel("Réussite");
         titleLabel.setForeground(Color.BLACK);
@@ -52,12 +52,9 @@ public class Menu extends JFrame {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-              
-               
-                // Dispose the main window
-            	disposeWithoutExiting();
-            	GameInterface frame = new GameInterface();
-            	frame.setVisible(true);
+                disposeWithoutExiting();
+                GameInterface frame = new GameInterface();
+                frame.setVisible(true);
             }
         });
         startButton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -71,7 +68,7 @@ public class Menu extends JFrame {
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               dispose();
+                dispose();
             }
         });
         exitButton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -111,9 +108,10 @@ public class Menu extends JFrame {
         contentPane.setLayout(gl_contentPane);
     }
 
+    public void disposeWithoutExiting() {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        dispose();
+    }
 
-    public void disposeWithoutExiting(){
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            dispose();
-        }
+
 }

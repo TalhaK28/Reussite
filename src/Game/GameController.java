@@ -19,6 +19,15 @@ public class GameController {
           }
           
     }
+    
+    GameController(GameController gamecontrol){
+    	
+    	this.cardPile=gamecontrol.cardPile;
+        this.Hand=gamecontrol.Hand;
+        this.score=gamecontrol.score;
+        this.joker=gamecontrol.joker;
+    	
+    }
 
     public int testHand() {
         
