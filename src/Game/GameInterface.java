@@ -50,12 +50,20 @@ public class GameInterface extends JFrame {
          contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
          setContentPane(contentPane);
 
-        JInternalFrame HandViewer = new JInternalFrame("Hand");
-        HandViewer.setBounds(177, 36, 936, 492);
-        HandViewer.setBorder(null);
-        HandViewer.getContentPane().setBackground(new Color(0, 128, 64));
+        //JInternalFrame HandViewer = new JInternalFrame("Hand");
+        //HandViewer.setBounds(177, 36, 936, 492);
+        //HandViewer.setBorder(null);
+        //HandViewer.getContentPane().setBackground(new Color(0, 128, 64));
+        //HandViewer.getContentPane().setBackground(new Color(0, 0, 255, 0));
         
-        
+         JInternalFrame HandViewer = new JInternalFrame("Hand");
+         HandViewer.setBounds(177, 36, 936, 492);
+         HandViewer.setBorder(null);
+         HandViewer.setOpaque(false); // Make the internal frame transparent
+         HandViewer.setBackground(new Color(0, 0, 0, 0)); // Make the background transparent
+         JPanel internalContentPane = new JPanel(); // JPanel for internal content
+         internalContentPane.setOpaque(false); // Make the internal content pane transparent
+         HandViewer.setContentPane(internalContentPane); 
         
         JButton drawButton = new JButton("Draw cards", new ImageIcon("src\\Game\\gameFond.PNG"));
         drawButton.setVerticalTextPosition(SwingConstants.CENTER);
